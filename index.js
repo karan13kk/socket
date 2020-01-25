@@ -17,6 +17,9 @@ process.on("unhandledRejection",function(err) {
 // config setup
 dotenv.config();
 
+/**
+ * App initialize
+ */
 var app = require("./server/app");
 
 /**
@@ -26,6 +29,20 @@ var server = http.createServer(app);
 server.listen(process.env.PORT);
 server.on("error", onError);
 server.on("listening", onListening);
+
+/**
+ * IO setup
+ */
+const io = require('socket.io')(server);
+
+io.on('connection', function (socket) {
+    console.log("CONNECTED");
+    socket.on('disconnect', function(){
+        console.log("DISCONNECTED");
+    });
+});
+
+app.set('io', io);
 
 /**
  * Event listener for HTTP server "error" event.
