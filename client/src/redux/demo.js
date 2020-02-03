@@ -4,7 +4,6 @@ const IN_IT = {
   project: "socket"
 };
 const demo = function(state = IN_IT, action) {
-  console.log(action);
   switch (action) {
     case DEMO: {
       return { ...state, ...action.payload };
