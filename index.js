@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 const http   = require("http");
 const dotenv = require('dotenv');
-
+const cors   = require('cors');
+const sockets= require('./server/io');
+var app      = require("./server/app");
 
 // process errors
 process.on("uncaughtException",function(err) {
@@ -18,9 +20,9 @@ process.on("unhandledRejection",function(err) {
 dotenv.config();
 
 /**
- * App initialize
+ * Middleware setup
  */
-var app = require("./server/app");
+app.use(cors);
 
 /**
  * Create HTTP server.
@@ -33,16 +35,7 @@ server.on("listening", onListening);
 /**
  * IO setup
  */
-const io = require('socket.io')(server);
-
-io.on('connection', function (socket) {
-    console.log("CONNECTED");
-    socket.on('disconnect', function(){
-        console.log("DISCONNECTED");
-    });
-});
-
-app.set('io', io);
+sockets.socketServer(server);
 
 /**
  * Event listener for HTTP server "error" event.
