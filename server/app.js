@@ -3,6 +3,6 @@ const app     = express();
 
 app.get("/",(req,res) => {
     res.send("CONNECTED");
-})
+});
 
 module.exports = app;
