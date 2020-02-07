@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const http = require("http");
-const dotenv = require("dotenv");const cors   = require('cors');
+const dotenv = require('dotenv');
+const cors   = require('cors');
 const sockets= require('./server/io');
 var app      = require("./server/app");
 
